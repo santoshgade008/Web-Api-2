@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="Scripts/jquery-3.5.1.min.js"></script>
+    <title></title>
+</head>
+<body>
+    <input type="text" id="searchID" />
+    <button onclick="searchContact()">Search</button>
+    <button onclick="addContact()">Add</button>
+    <button onclick="putContact()">Put</button>
+    <button onclick="deleteContact()">Delete</button>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            //$.getJSON("api/Contact", function (result) {
+            $.getJSON("api/ContactEF", function (result) {
+                console.info(result);
+            });
+        });
+        function searchContact() {
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                //url: "api/Contact?name=" + $("#searchID").val(),
+                url: "api/Contact/" + $("#searchID").val(),
+                success: function (result) {
+                    console.info(result);
+                }
+            });
+        }
+        function deleteContact() {
+
+            $.ajax({
+                type: "DELETE",
+                dataType: "json",
+                url: "api/Contact/0",
+                success: function (result) {
+                    console.info(result);
+                }
+            });
+        }
+        function putContact() {
+            var changedContact = {
+                "FirstName": "Sandip"
+            }
+            $.ajax({
+                type: "PUT",
+                dataType: "json",
+                url: "api/Contact/0",
+                data: changedContact,
+                success: function (result) {
+                    console.info(result);
+                }
+            });
+        }
+
+        function addContact() {
+            var newContact = {
+                "Id": 0,
+                "FirstName": "Popat",
+                "LastName": "Gorade"
+            }
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                //url: "api/Contact",
+                url: "api/ContactEF",
+                data: newContact,
+                success: function (result) {
+                    console.info(result);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
